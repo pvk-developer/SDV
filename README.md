@@ -19,17 +19,14 @@
 
 <h1>SDV - Synthetic Data Vault</h1>
 
-Automated generative modeling and sampling
-
 - License: MIT
 - Documentation: https://HDI-Project.github.io/SDV
 - Homepage: https://github.com/HDI-Project/RDT
 
 ## Overview
 
-**SDV** allows the user to sample relational databases. Users can get easily access to information
-about the relational database, create generative models for tables in the database and sample rows
-from these models to produce synthetic data.
+**SDV** is an automated generative modeling and sampling tool that allows the users to generate
+synthetic data after creating generative models for their data.
 
 # Install
 
@@ -269,7 +266,7 @@ samples = sdv.sample_all()
 This will generate `5` samples of all the `columns` that we had in `data`. **Notice** that this
 is sampled data, so you will probably obtain different results as the ones shown below.
 
-```python
+```
 samples['data']
 
    integer     float categorical   bool  nullable                      datetime
