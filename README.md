@@ -189,6 +189,10 @@ metadata = {
     "path": "",
     "tables": [
         {
+            "headers": True,
+            "name": "data",
+            "path": "data.csv",
+            "use": True
             "fields": [
                 {
                     "name": "integer",
@@ -223,16 +227,10 @@ metadata = {
                     "format": "%Y-%m-%d"
                 },
             ],
-            "headers": True,
-            "name": "data",
-            "path": "data.csv",
-            "use": True
         }
     ]
 }
 ```
-
-More information about `MetaData` can be found [here](https://hdi-project.github.io/MetaData.json/index).
 
 ### 2. Create SDV instance and fit
 
