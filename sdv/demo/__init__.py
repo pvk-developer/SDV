@@ -15,9 +15,9 @@ COUNTRIES = [
 
 GENDERS = ['M', 'F', None]
 
-DEVICE_TYPES = ['MOBILE', 'TABLET']
+DEVICE_TYPES = ['mobile', 'tablet']
 
-OPERATIVE_SYSTEMS = ['iOS', 'android', 'windows']
+OPERATIVE_SYSTEMS = ['ios', 'android', 'windows']
 
 
 def _get_random_choices(choices, amount):
@@ -31,28 +31,39 @@ def _get_datetime(amount):
     ])
 
 
-def get_demo():
+def get_demo(amount=10):
+    """Generate three tables related between them.
+
+    Generate three tables, ``users``, ``sessions`` and ``transactions`` with random generated rows.
+
+    Args:
+        amount (int):
+            The amount of rows that we would like to generate.
+    Returns:
+        tuple of dicts:
+            Returns a tuple that contains two dictionaries, metadata and tables.
+    """
 
     users = pd.DataFrame({
-        'user_id': np.array(range(10)),
-        'country': _get_random_choices(COUNTRIES, 10),
-        'gender': _get_random_choices(GENDERS, 10),
-        'age': np.array([random.randint(18, 50) for _ in range(10)]),
+        'user_id': np.array(range(amount)),
+        'country': _get_random_choices(COUNTRIES, amount),
+        'gender': _get_random_choices(GENDERS, amount),
+        'age': np.array([random.randint(18, 50) for _ in range(amount)]),
     })
 
     sessions = pd.DataFrame({
-        'session_id': np.array(range(10)),
-        'user_id': np.array([random.randint(0, 9) for _ in range(10)]),
-        'device_type': _get_random_choices(DEVICE_TYPES, 10),
-        'operative_system': _get_random_choices(OPERATIVE_SYSTEMS),
+        'session_id': np.array(range(amount)),
+        'user_id': np.array([random.randint(0, amount - 1) for _ in range(amount)]),
+        'device_type': _get_random_choices(DEVICE_TYPES, amount),
+        'operative_system': _get_random_choices(OPERATIVE_SYSTEMS, amount),
     })
 
     transactions = pd.DataFrame({
-        'transaction_id': np.array(range(10)),
-        'session_id': np.array([random.randint(0, 9) for _ in range(10)]),
-        'datetime': pd.to_datetime(_get_datetime(10)),
-        'amount': np.array([round(random.random() * 1000, 2) for _ in range(10)]),
-        'approved': _get_random_choices([True, False], 10),
+        'transaction_id': np.array(range(amount)),
+        'session_id': np.array([random.randint(0, amount - 1) for _ in range(amount)]),
+        'datetime': pd.to_datetime(_get_datetime(amount)),
+        'amount': np.array([round(random.random() * 1000, 2) for _ in range(amount)]),
+        'approved': _get_random_choices([True, False], amount),
     })
 
     metadata = {

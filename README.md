@@ -139,103 +139,29 @@ a `pandas.DataFrame`.
 In this short series of tutorials we will guide you through a series of steps that will help you
 getting started using **SDV** to sample columns, tables and datasets.
 
-## 1. Create some demo data and metadata
+## 1. Load some demo datasets and metadata
 
-In the example below we will create a `pandas.DataFrame` that contains one of each types that
-**SDV** can sample (`numerical`, `categorical`, `bool`, `datetime`).
+As we explained before, we will need some data and the metadata corresponding to this data in order
+to work with **SDV**. In this example, we will use the function `get_demo` from `sdv.demo` module.
+This will return us `metadata` and `tables`.
 
 ```python
-import pandas as pd
-import numpy as np
+from sdv.demo import get_demo
 
-data = pd.DataFrame({
-    'integer': [1, None, 1, 2, 1, 2, 3, 2],
-    'float': [0.1, None, 0.1, 0.2, 0.1, 0.2, 0.3, 0.1],
-    'categorical': ['a', 'b', 'a', 'b', 'a', None, 'c', None],
-    'bool': [False, True, False, True, False, False, False, None],
-    'nullable': [1, None, 3, None, 5, None, 7, None],
-    'datetime': [
-        '2010-01-01', '2010-02-01', '2010-01-01', '2010-02-01',
-        '2010-01-01', '2010-02-01', '2010-03-01', None
-    ]
-})
-
-data['datetime'] = pd.to_datetime(data['datetime'])
-
-tables = {
-    'data': data
-}
+metadata, tables = get_demo()
 ```
 
-If we print the content of this `data` we would recieve an output like this:
+The returned objects contain the following information:
 
-```
-   integer  float categorical   bool  nullable   datetime
-0      1.0    0.1           a  False       1.0 2010-01-01
-1      NaN    NaN           b   True       NaN 2010-02-01
-2      1.0    0.1           a  False       3.0 2010-01-01
-3      2.0    0.2           b   True       NaN 2010-02-01
-4      1.0    0.1           a  False       5.0 2010-01-01
-5      2.0    0.2        None  False       NaN 2010-02-01
-6      3.0    0.3           c  False       7.0 2010-03-01
-7      2.0    0.1        None   None       NaN        NaT
-```
+- `tables`: python `dict` that contains three tables (`users`, `sessions` and `transactions`).
+- `metadata`: python `dict` that contains the information about the fields, primary keys and
+foreign keys for those tables as described in the [metadata section](#metadata).
 
-Once we have our `tables` created, let's create the `metadata` dictionary corresponding to the
-table `data`.
-
-```
-metadata = {
-    "path": "",
-    "tables": [
-        {
-            "headers": True,
-            "name": "data",
-            "path": "data.csv",
-            "use": True
-            "fields": [
-                {
-                    "name": "integer",
-                    "type": "number",
-                    "subtype": "integer",
-                },
-                {
-                    "name": "float",
-                    "type": "number",
-                    "subtype": "float",
-                },
-                {
-                    "name": "categorical",
-                    "type": "categorical",
-                    "subtype": "categorical",
-                    "pii": False,
-                    "pii_category": "email"
-                },
-                {
-                    "name": "bool",
-                    "type": "categorical",
-                    "subtype": "bool",
-                },
-                {
-                    "name": "nullable",
-                    "type": "number",
-                    "subtype": "float",
-                },
-                {
-                    "name": "datetime",
-                    "type": "datetime",
-                    "format": "%Y-%m-%d"
-                },
-            ],
-        }
-    ]
-}
-```
 
 ### 2. Create SDV instance and fit
 
-Before sampling first we have to `fit` our `SDV`, in order to do so we have to import it,
-instantiate it and fit it with the `metadata` and `tables` that we created before:
+Before sampling, first we have to `fit` our `SDV`. In order to do so we have to import it,
+instantiate it and fit it with the `metadata` and `tables` that we obtained before:
 
 ```python
 from sdv import SDV
@@ -261,18 +187,41 @@ Sampling data once we have fitted our `sdv` instance is as simple as:
 samples = sdv.sample_all()
 ```
 
-This will generate `5` samples of all the `columns` that we had in `data`. **Notice** that this
-is sampled data, so you will probably obtain different results as the ones shown below.
+This will generate `5` samples of all the `dataframes` that we had in our `tables`.
+**Bear in mind** that this is sampled data, so you will probably obtain different results as the
+ones shown below.
 
 ```
-samples['data']
+samples['users']
 
-   integer     float categorical   bool  nullable                      datetime
-0        2  0.177919         NaN  False       NaN 2010-02-08 04:56:42.038568192
-1        3  0.249520           c  False       NaN 2010-02-19 21:30:27.231292160
-2        2  0.161674         NaN    NaN       NaN                           NaT
-3        0  0.031763           a   True       NaN 2009-12-13 21:23:44.602550528
-4        3  0.323860           c  False       NaN 2010-03-01 08:08:26.009617408
+   user_id  country gender  age
+0        0   Canada      F   60
+1        1  Germany      M   45
+2        2   France      F   44
+3        3  Germany      F   40
+4        4   Canada      M   46
+```
+
+```
+samples['sessions']
+
+   session_id  user_id device_type operative_system
+0           0        0      mobile          windows
+1           1        1      mobile          windows
+2           2        1      mobile          android
+3           3        2      tablet              ios
+4           4        2      tablet              ios
+```
+
+```
+samples['transactions']
+
+   transaction_id  session_id                      datetime      amount  approved
+0               0           0 2018-04-13 10:01:25.053699072  701.361518      True
+1               1           0 2018-04-13 10:01:25.053699072  699.960940      True
+2               2           0 2018-04-13 10:01:25.053699072  700.801190      True
+3               3           0 2018-04-13 10:01:25.053699072  700.932238      True
+4               4           1                           NaT  558.657914      True
 ```
 
 # What's next?
