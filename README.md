@@ -19,17 +19,14 @@
 
 <h1>SDV - Synthetic Data Vault</h1>
 
-Automated generative modeling and sampling
-
 - License: MIT
 - Documentation: https://HDI-Project.github.io/SDV
 - Homepage: https://github.com/HDI-Project/RDT
 
 ## Overview
 
-**SDV** allows the user to sample relational databases. Users can get easily access to information
-about the relational database, create generative models for tables in the database and sample rows
-from these models to produce synthetic data.
+**SDV** is an automated generative modeling and sampling tool that allows the users to generate
+synthetic data after creating generative models for their data.
 
 # Install
 
@@ -94,74 +91,48 @@ about the tables that you would like to sample and also provide those tables.
 
 ## Metadata
 
-The `MetaData` can be either a `.json` file or a python `dict` object. This must contain the
-following keys:
+The `Metadata` can be a python `dict` or a `json` file consisting of multiple parts. At the highest
+level of the object, there is information about the path to the dataset and a list of table
+objects each representing a data table in the dataset. Each table object contains information
+about its row and other important information. The structure of the meta.json object is described
+below.
 
-- Tables, representing a list with the keys of `headers`, `name`, `path`. `primary_key`, `use` and
-`fields`.
-- Fields, representing a list that contains  describes each field type.
+### Meta Object
 
-```
-{
-    "tables": [
-        {
-            "headers": true,
-            "name": "table_1",
-            "path": "table_1.csv",
-            "primary_key": "id",
-            "use": true,
-            "fields": [
-                {
-                    "name": "id",
-                    "type": "id",
-                    "subtype": "number"
-                },
-                {
-                    "name": "date_field",
-                    "type": "datetime",
-                    "format": "%Y-%m-%d"
-                },
-                {
-                    "name": "categorical_field",
-                    "type": "categorical",
-                    "subtype": "categorical"
-                },
-                {
-                    "name": "integer_field",
-                    "type": "number",
-                    "subtype": "integer"
-                },
-                {
-                    "name": "float_field",
-                    "type": "number",
-                    "subtype": "float"
-                },
-                ...
-            ]
-        },
-        {
-            "headers": true,
-            "name": "table_2",
-            "path": "table_2.csv",
-            "primary_key": "id",
-            "use": true,
-            "fields": [
-                {
-                    "name": "user_id",
-                    "ref": {
-                        "field": "id",
-                        "table": "users"
-                    },
-                    "type": "id",
-                    "subtype": "number"
-                },
-                ...
-            ]
-        }
-    ]
-}
-```
+- **path** - A string representing the path to the dataset.
+- **tables** - A list of table objects.
 
+### Table Object
+
+- **path** - A string containing the path to the table's `csv` file.
+- **name** - A string representing the name of the table for reference.
+- **primary_key** - A string containing the name of the primary key column.
+- **headers** - Boolean that represents wheither or not the table contains a header row.
+- **use** - Boolean that represents wheither or not to use this table.
+- **fields** - A list of field objects in the table.
+
+### Field Object
+
+- **name** - A string representing the name of the field.
+- **type** - A string representing the type of the field.
+- **subtype** - A string representing the subtype.
+- **ref** - An object that represennts a foreign key, a reference to another table's primary key.
+
+### Ref Object
+
+- **table** - A string representing the name of the table that's primary key is being referenced.
+- **field** - A string representing the name of the field that is the primary key.
+
+**Bear in mind** that primary keys can only be of `type` `id` and subtype `number` or
+`categorical`. More detailed information about how to generate a more proper `metadata` can be
+found at the [project documentation site](https://HDI-Project.github.io/SDV/).
+
+## Dataset / Datatable
+
+In order to work with `SDV` you will need your tables to be a `.csv` file separeted with `,` and
+it's path specified in the `metadata` as described above. Also, you can create a python `dict`
+object containing as `key` the given `name` in the `metadata` and as value an instance of
+a `pandas.DataFrame`.
 
 # Quickstart
 
@@ -218,6 +189,10 @@ metadata = {
     "path": "",
     "tables": [
         {
+            "headers": True,
+            "name": "data",
+            "path": "data.csv",
+            "use": True
             "fields": [
                 {
                     "name": "integer",
@@ -252,16 +227,10 @@ metadata = {
                     "format": "%Y-%m-%d"
                 },
             ],
-            "headers": True,
-            "name": "data",
-            "path": "data.csv",
-            "use": True
         }
     ]
 }
 ```
-
-More information about `MetaData` can be found [here](https://hdi-project.github.io/MetaData.json/index).
 
 ### 2. Create SDV instance and fit
 
@@ -295,7 +264,7 @@ samples = sdv.sample_all()
 This will generate `5` samples of all the `columns` that we had in `data`. **Notice** that this
 is sampled data, so you will probably obtain different results as the ones shown below.
 
-```python
+```
 samples['data']
 
    integer     float categorical   bool  nullable                      datetime
