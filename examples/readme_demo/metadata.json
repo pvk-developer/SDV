@@ -1,0 +1,106 @@
+{
+    "path": "",
+    "tables": [
+        {
+            "headers": true,
+            "name": "users",
+            "path": "users.csv",
+            "primary_key": "user_id",
+            "use": true,
+            "fields": [
+                {
+                    "name": "user_id",
+                    "type": "id",
+                    "subtype": "number"
+                },
+                {
+                    "name": "country",
+                    "type": "categorical",
+                    "subtype": "categorical"
+                },
+                {
+                    "name": "gender",
+                    "type": "categorical",
+                    "subtype": "categorical"
+                },
+                {
+                    "name": "age",
+                    "type": "number",
+                    "subtype": "integer"
+                }
+            ]
+        },
+        {
+            "headers": true,
+            "name": "sessions",
+            "path": "sessions.csv",
+            "primary_key": "session_id",
+            "use": true,
+            "fields": [
+                {
+                    "name": "session_id",
+                    "type": "id",
+                    "subtype": "number"
+                },
+                {
+                    "name": "user_id",
+                    "ref": {
+                        "field": "user_id",
+                        "table": "users"
+                    },
+                    "type": "id",
+                    "subtype": "number"
+                },
+                {
+                    "name": "device_type",
+                    "type": "categorical",
+                    "subtype": "categorical"
+                },
+                {
+                    "name": "operative_system",
+                    "type": "categorical",
+                    "subtype": "categorical"
+                }
+            ]
+        },
+        {
+            "headers": true,
+            "name": "transactions",
+            "path": "transactions.csv",
+            "primary_key": "transaction_id",
+            "use": true,
+            "fields": [
+                {
+                    "name": "transaction_id",
+                    "type": "id",
+                    "subtype": "number"
+                },
+                {
+                    "name": "session_id",
+                    "ref": {
+                        "field": "session_id",
+                        "table": "sessions"
+                    },
+                    "type": "id",
+                    "subtype": "number"
+                },
+                {
+                    "name": "datetime",
+                    "type": "datetime",
+                    "format": "%Y-%m-%d"
+                },
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "subtype": "float"
+                },
+                {
+                    "name": "approved",
+                    "type": "categorical",
+                    "subtype": "bool"
+                }
+            ]
+        }
+    ]
+}
+
