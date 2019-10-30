@@ -21,7 +21,7 @@
 
 - License: MIT
 - Documentation: https://HDI-Project.github.io/SDV
-- Homepage: https://github.com/HDI-Project/RDT
+- Homepage: https://github.com/HDI-Project/SDV
 
 ## Overview
 
