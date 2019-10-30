@@ -49,10 +49,10 @@ def load_csv(root_path, table_meta):
 class Metadata:
     """Navigate through and transform a dataset.
 
-    This class implement two main functionalities:
+    This class implements two main functionalities:
 
-    - Navigation through the dataset
-        Given a table, it allows to move though its relations and acces its data and metadata.
+    - Navigation through the datasets
+        Given a table, it allows to move through its relations and acces its data and metadata.
 
     - Transform data
         Transform the dataset using ``rdt.HyperTransformer`` in a format that is supported
