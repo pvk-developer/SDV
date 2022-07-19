@@ -482,7 +482,7 @@ class BaseTabularModel:
             self._set_random_state(FIXED_RNG_SEED)
 
     def sample(self, num_rows, randomize_samples=True, max_tries_per_batch=100, batch_size=None,
-               output_file_path=None, conditions=None):
+               output_file_path=None, conditions=None, progress_bar=None):
         """Sample rows from this table.
 
         Args:
@@ -524,16 +524,18 @@ class BaseTabularModel:
 
         batch_size = min(batch_size, num_rows) if batch_size else num_rows
 
+        if progress_bar is None:
+            progress_bar = tqdm.tqdm(total=num_rows)
+            progress_bar.set_description('Sampling rows')
+
         try:
-            with tqdm.tqdm(total=num_rows) as progress_bar:
-                progress_bar.set_description('Sampling rows')
-                sampled = self._sample_in_batches(
-                    num_rows=num_rows,
-                    batch_size=batch_size,
-                    max_tries_per_batch=max_tries_per_batch,
-                    progress_bar=progress_bar,
-                    output_file_path=output_file_path
-                )
+            sampled = self._sample_in_batches(
+                num_rows=num_rows,
+                batch_size=batch_size,
+                max_tries_per_batch=max_tries_per_batch,
+                progress_bar=progress_bar,
+                output_file_path=output_file_path
+            )
 
         except (Exception, KeyboardInterrupt) as error:
             handle_sampling_error(output_file_path == TMP_FILE_NAME, output_file_path, error)

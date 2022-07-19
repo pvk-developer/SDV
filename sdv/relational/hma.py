@@ -4,6 +4,7 @@ import logging
 
 import numpy as np
 import pandas as pd
+import tqdm
 
 from sdv.relational.base import BaseRelationalModel
 from sdv.tabular.copulas import GaussianCopula
@@ -346,7 +347,7 @@ class HMA1(BaseRelationalModel):
 
         return flat_parameters.rename(new_keys).to_dict()
 
-    def _sample_rows(self, model, table_name, num_rows=None):
+    def _sample_rows(self, model, table_name, num_rows=None, progress_bar=None):
         """Sample ``num_rows`` from ``model``.
 
         Args:
@@ -362,7 +363,7 @@ class HMA1(BaseRelationalModel):
                 Sampled rows, shape (, num_rows)
         """
         num_rows = num_rows or model._num_rows
-        sampled = model.sample(num_rows, output_file_path='disable')
+        sampled = model.sample(num_rows, output_file_path='disable', progress_bar=progress_bar)
 
         primary_key_name = self.metadata.get_primary_key(table_name)
         if primary_key_name:
@@ -371,7 +372,7 @@ class HMA1(BaseRelationalModel):
 
         return sampled
 
-    def _sample_child_rows(self, table_name, parent_name, parent_row, sampled_data):
+    def _sample_child_rows(self, table_name, parent_name, parent_row, sampled_data, progress_bar):
         """Sample child rows that reference the given parent row.
 
         The sampled rows will be stored in ``sampled_data`` under the ``table_name`` key.
@@ -393,7 +394,7 @@ class HMA1(BaseRelationalModel):
         model = self._model(table_metadata=table_meta)
         model.set_parameters(parameters)
 
-        table_rows = self._sample_rows(model, table_name)
+        table_rows = self._sample_rows(model, table_name, progress_bar=progress_bar)
         if len(table_rows):
             parent_key = self.metadata.get_primary_key(parent_name)
             table_rows[foreign_key] = parent_row[parent_key]
@@ -421,8 +422,16 @@ class HMA1(BaseRelationalModel):
         for child_name in self.metadata.get_children(table_name):
             if child_name not in sampled_data:
                 LOGGER.info('Sampling rows from child table %s', child_name)
-                for _, row in table_rows.iterrows():
-                    self._sample_child_rows(child_name, table_name, row, sampled_data)
+                with tqdm.tqdm(total=len(table_rows)) as progress_bar:
+                    progress_bar.set_description('Sampling child rows')
+                    for _, row in table_rows.iterrows():
+                        self._sample_child_rows(
+                            child_name,
+                            table_name,
+                            row,
+                            sampled_data,
+                            progress_bar
+                        )
 
                 child_rows = sampled_data[child_name]
                 self._sample_children(child_name, sampled_data, child_rows)
