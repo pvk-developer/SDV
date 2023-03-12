@@ -50,8 +50,8 @@ hierarchical generative modeling and recursive sampling techniques.
 | [![][Slack Logo] **Community**][Community]    | Join our Slack Workspace for announcements and discussions.                                         |
 
 [Website]: https://sdv.dev
-[DataCebo Blog]: https://datacebo.com/blog
-[Documentation]: https://bit.ly/sdv-docs
+[Blog]: https://datacebo.com/blog
+[Docs]: https://bit.ly/sdv-docs
 [Repository]: https://github.com/sdv-dev/SDV
 [License]: https://github.com/sdv-dev/SDV/blob/master/LICENSE
 [Development Status]: https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha
