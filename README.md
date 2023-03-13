@@ -44,7 +44,7 @@ hierarchical generative modeling and recursive sampling techniques.
 <table>
 <thead>
   <tr>
-    <th><span style='font-weight:bold'>Important Links</span></th>
+    <th><span style='font-weight:bold; width=100%'>Important Links</span></th>
     <th></th>
   </tr>
 </thead>
@@ -54,7 +54,7 @@ hierarchical generative modeling and recursive sampling techniques.
     <td>Check out the SDV Website for more information about the project.</td>
   </tr>
   <tr>
-    <td><div style='display: inline-block'>:book: <span style="font-weight:bold"><a href='https://bit.ly/sdv-docs'>Documentation</a></span></div></td>
+    <td>:book: <span style="font-weight:bold"><a href='https://bit.ly/sdv-docs'>Docs</a></span></td>
     <td>Learn how to use the SDV library with tutorials, demos and API references.</td>
   </tr>
   <tr>
@@ -62,7 +62,7 @@ hierarchical generative modeling and recursive sampling techniques.
     <td>Get some hands-on experience with the SDV. Launch the tutorial notebooks and run the code yourself.</td>
   </tr>
   <tr>
-    <td><div>:orange_book: <span style="font-weight:bold"><a href='https://datacebo.com/blog'>DataCebo Blog</a></span></div></td>
+    <td><div>:orange_book: <span style="font-weight:bold"><a href='https://datacebo.com/blog'>Blog</a></span></div></td>
     <td>Get more insights about using the SDV, deploying models, and our synthetic data community.</td>
   </tr>
   <tr>
@@ -71,6 +71,7 @@ hierarchical generative modeling and recursive sampling techniques.
   </tr>
 </tbody>
 </table>
+
 
 [Website]: https://sdv.dev
 [Blog]: https://datacebo.com/blog
