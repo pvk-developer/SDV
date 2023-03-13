@@ -54,7 +54,7 @@ hierarchical generative modeling and recursive sampling techniques.
     <td>Check out the SDV Website for more information about the project.</td>
   </tr>
   <tr>
-    <td><div>:book: <span style="font-weight:bold"><a href='https://bit.ly/sdv-docs'>Documentation</a></span></div></td>
+    <td><div style='display: inline-block'>:book: <span style="font-weight:bold"><a href='https://bit.ly/sdv-docs'>Documentation</a></span></div></td>
     <td>Learn how to use the SDV library with tutorials, demos and API references.</td>
   </tr>
   <tr>
