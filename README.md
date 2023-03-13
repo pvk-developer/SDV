@@ -47,7 +47,7 @@ hierarchical generative modeling and recursive sampling techniques.
 | :book: [Docs]                    | Learn how to use the SDV library with tutorials, demos and API references.                          |
 | [![][MyBinder Logo] Tutorials][Tutorials] | Get some hands-on experience with the SDV. Launch the tutorial notebooks and run the code yourself. |
 | :orange_book: [Blog]             | Get more insights about using the SDV, deploying models, and our synthetic data community.          |
-| [![][Slack Logo] **SDV Community**][Community]    | Join our Slack Workspace for announcements and discussions.                                         |
+| [![][Slack Logo] **SDV Community**][SDV Community]    | Join our Slack Workspace for announcements and discussions.                                         |
 
 
 [Website]: https://sdv.dev
