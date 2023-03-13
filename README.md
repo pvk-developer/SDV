@@ -41,14 +41,36 @@ Underneath the hood it uses several probabilistic graphical modeling and deep le
 techniques. To enable a variety of data storage structures, we employ unique
 hierarchical generative modeling and recursive sampling techniques.
 
-| Important Links                          |                                                                                                     |
-|------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| :computer: [Website]                      | Check out the SDV Website for more information about the project.                                   |
-| :book: [Docs]                    | Learn how to use the SDV library with tutorials, demos and API references.                          |
-| [![][MyBinder Logo] Tutorials][Tutorials] | Get some hands-on experience with the SDV. Launch the tutorial notebooks and run the code yourself. |
-| :orange_book: [Blog]             | Get more insights about using the SDV, deploying models, and our synthetic data community.          |
-| [![][Slack Logo] **Community**][SDV Community]    | Join our Slack Workspace for announcements and discussions.                                         |
-
+<table>
+<thead>
+  <tr>
+    <th><span style='font-weight:bold'>Important Links</span></th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>:computer: <span style="font-weight:bold"><a href='https://sdv.dev/'>Website</a></span></td>
+    <td>Check out the SDV Website for more information about the project.</td>
+  </tr>
+  <tr>
+    <td>:book: <span style="font-weight:bold"><a href='https://bit.ly/sdv-docs'>Documentation</a></span></td>
+    <td>Learn how to use the SDV library with tutorials, demos and API references.</td>
+  </tr>
+  <tr>
+    <td><img src='https://github.com/sdv-dev/SDV/blob/master/docs/images/mybinder.png'/> <span style="font-weight:bold"><a href='https://bit.ly/sdv-tutorials'>Tutorials</a></span></td>
+    <td>Get some hands-on experience with the SDV. Launch the tutorial notebooks and run the code yourself.</td>
+  </tr>
+  <tr>
+    <td>:orange_book: <span style="font-weight:bold"><a href='https://datacebo.com/blog'>DataCebo Blog</a></span></td>
+    <td>Get more insights about using the SDV, deploying models, and our synthetic data community.</td>
+  </tr>
+  <tr>
+    <td><img src='https://github.com/sdv-dev/SDV/blob/master/docs/images/slack.png/'/> <span style="font-weight:bold"><a href='https://bit.ly/sdv-slack-invite'>Community</a></span></td>
+    <td>Join our Slack Workspace for announcements and discussions.</td>
+  </tr>
+</tbody>
+</table>
 
 [Website]: https://sdv.dev
 [Blog]: https://datacebo.com/blog
